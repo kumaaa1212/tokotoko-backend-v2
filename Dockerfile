@@ -7,5 +7,6 @@ WORKDIR /home/alpine/git-secrets
 RUN make && make install
 WORKDIR /api
 COPY package*.json ./
-RUN npm ci
+RUN npm ci && \
+    npm i -g @nestjs/cli@9.1.2
 COPY . .
