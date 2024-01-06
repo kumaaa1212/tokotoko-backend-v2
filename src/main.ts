@@ -23,7 +23,6 @@ async function bootstrap() {
     csurf({
       cookie: {
         httpOnly: true,
-        // ブラウザで読み込まれたくないから
         sameSite: 'none',
         secure: true,
       },

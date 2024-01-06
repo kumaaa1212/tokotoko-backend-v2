@@ -23,7 +23,6 @@ export class AuthController {
   }
 
   @HttpCode(HttpStatus.OK)
-  // nest.jsでレスポンスは201になってしまう。
   @Post('login')
   async login(
     @Body() dto: LoginUserDto,
@@ -31,6 +30,21 @@ export class AuthController {
   ): Promise<Msg> {
     const jwt = await this.authService.login(dto);
     res.cookie('access_token', jwt.accessToken, {
+      httpOnly: true,
+      // secure: true,
+      secure: false,
+      sameSite: 'none',
+      path: '/',
+    });
+    return {
+      message: 'ok',
+    };
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('/logout')
+  logout(@Req() req: Request, @Res({ passthrough: true }) res: Response): Msg {
+    res.cookie('access_token', '', {
       httpOnly: true,
       // secure: true,
       secure: false,
