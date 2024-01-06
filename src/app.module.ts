@@ -11,8 +11,10 @@ import { ConfigModule } from '@nestjs/config';
     TypeOrmModule.forRoot(AppDataSource.options),
     AuthModule,
     ConfigModule.forRoot({ isGlobal: true }),
-  ], // 修正
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
+
+// 全体で使いたいから、ConfigModuleをapp.module.tsに追加した。

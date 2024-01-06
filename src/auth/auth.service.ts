@@ -32,7 +32,7 @@ export class AuthService {
       updatedAt: new Date().toISOString(),
     });
     await this.userRepository.save(user);
-    return user;
+    return { message: 'ユーザー登録が完了しました' };
   }
 
   async login(dto: LoginUserDto): Promise<{ accessToken: string }> {
@@ -47,14 +47,12 @@ export class AuthService {
       `ユーザー名またはパスワードを確認してください`,
     );
   }
+
   async generateJwt(
     userId: string,
     email: string,
   ): Promise<{ accessToken: string }> {
-    const payload = {
-      sub: userId,
-      email,
-    };
+    const payload = { sub: userId, email };
     const secret = this.config.get('JWT_SECRET');
     const token = await this.jwt.signAsync(payload, {
       expiresIn: '5m',
