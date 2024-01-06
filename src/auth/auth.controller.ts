@@ -1,13 +1,21 @@
-import { Body, Controller, HttpCode } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Req } from '@nestjs/common';
 import { HttpStatus, Post, Res } from '@nestjs/common';
-import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUserDto, LoginUserDto } from './dto/auth.dto';
-import { Msg } from './interface';
+import { Csrf, Msg } from './interface';
+import { Request, Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @Get('/csrf')
+  getCsrfToken(@Req() req: Request): Csrf {
+    return { csrfToken: req.csrfToken() };
+    // csrfTokenはcsrfTokenを生成するメソッド
+    // Keyをふよする処理は、app.module.tsに書く。自動で付与される。
+    // csrfTokenをreturnして、フロント側でcookieにセットする。
+  }
 
   @Post('signup')
   signUp(@Body() dto: CreateUserDto): Promise<Msg> {
