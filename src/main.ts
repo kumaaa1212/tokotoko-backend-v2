@@ -12,10 +12,7 @@ async function bootstrap() {
   // whitelistは、不要なデータを削除する。不要なプロパティを削除する。
   app.enableCors({
     credentials: true,
-    origin: [
-      'http://localhost:3000',
-      'https://frontend-todo-nextjs.vercel.app',
-    ],
+    origin: ['http://localhost:3000'],
   });
 
   app.use(cookieParser());
