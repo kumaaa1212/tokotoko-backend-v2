@@ -12,12 +12,15 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   team: string;
+
+  @IsNotEmpty()
+  email: string;
 }
 
 export class LoginUserDto {
   @IsString()
   @IsNotEmpty()
-  name: string;
+  email: string;
 
   @IsString()
   @MinLength(6)

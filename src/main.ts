@@ -12,7 +12,7 @@ async function bootstrap() {
   // whitelistは、不要なデータを削除する。不要なプロパティを削除する。
   app.enableCors({
     credentials: true,
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3003'],
   });
 
   app.use(cookieParser());

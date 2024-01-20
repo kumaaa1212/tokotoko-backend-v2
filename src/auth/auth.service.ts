@@ -16,7 +16,7 @@ export class AuthService {
   ) {}
 
   async singUp(dto: CreateUserDto) {
-    const { name, password } = dto;
+    const { name, password, team, email } = dto;
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -24,7 +24,8 @@ export class AuthService {
     const user = this.userRepository.create({
       name,
       password: hashedPassword,
-      team: '',
+      team: team,
+      email: email,
       icon: '',
       twitterURL: '',
       teamURL: '',
@@ -36,9 +37,9 @@ export class AuthService {
   }
 
   async login(dto: LoginUserDto): Promise<{ accessToken: string }> {
-    const { name, password } = dto;
+    const { email, password } = dto;
 
-    const user = await this.userRepository.findOneBy({ name });
+    const user = await this.userRepository.findOneBy({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
       return this.generateJwt(user.id, user.name);

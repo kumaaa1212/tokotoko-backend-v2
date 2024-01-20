@@ -9,7 +9,7 @@ import { Request, Response } from 'express';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get('/csrf')
+  @Get('csrf')
   getCsrfToken(@Req() req: Request): Csrf {
     return { csrfToken: req.csrfToken() };
     // csrfTokenはcsrfTokenを生成するメソッド
@@ -31,8 +31,8 @@ export class AuthController {
     const jwt = await this.authService.login(dto);
     res.cookie('access_token', jwt.accessToken, {
       httpOnly: true,
-      // secure: true,
-      secure: false,
+      secure: true,
+      // secure: false,
       sameSite: 'none',
       path: '/',
     });
@@ -46,8 +46,8 @@ export class AuthController {
   logout(@Req() req: Request, @Res({ passthrough: true }) res: Response): Msg {
     res.cookie('access_token', '', {
       httpOnly: true,
-      // secure: true,
-      secure: false,
+      secure: true,
+      // secure: false,
       sameSite: 'none',
       path: '/',
     });
